@@ -21,43 +21,43 @@ A simple budget-tracking application built with Django(DRF) and React.js
 Clone the project
 
 ```bash
-  git clone https://github.com/pkkulhari/budget-tracker.git
+git clone https://github.com/pkkulhari/budget-tracker.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd budget-tracker
+cd budget-tracker
 ```
 
 Install dependencies for Backend
 
 ```bash
-  cd backend & pip install -r requirements.txt
+cd backend && pip install -r requirements.txt
 ```
 
 Make DB migrations
 
 ```bash
-  python manage.py makemigrations & python manage.py migrate
+python manage.py makemigrations && python manage.py migrate
 ```
 
 Start the backend server
 
 ```bash
-  python manage.py runserver
+python manage.py runserver
 ```
 
 Open a new terminal and install dependencies for frontend
 
 ```bash
-  cd frontend & yarn
+cd frontend && yarn
 ```
 
 Start the development server
 
 ```bash
-  yarn dev
+yarn dev
 ```
 
 Go to http://localhost:5173/
