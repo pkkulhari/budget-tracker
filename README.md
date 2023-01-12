@@ -61,3 +61,11 @@ Start the development server
 ```
 
 Go to http://localhost:5173/
+
+## Usage
+
+After installing, you can go to app and add transactions.
+
+**Note:** It's important to note that only users who are in your friend list will appear in the dropdown options for the "payer" and "friends to split" fields.
+
+Therefore, before you can add a transaction, you will need to create multiple accounts through the signup process and then add those users to your friend list.
