@@ -16,28 +16,32 @@ const OwesYou = () => {
     <Container>
       <h1 className="h4 mb-3">Owes You</h1>
 
-      <div className="border rounded p-3 bg-light">
-        <Table striped hover>
-          <thead>
-            <tr>
-              <th>Sr. No.</th>
-              <th>Lender</th>
-              <th>Amount</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {queryTransactions.data?.map((transaction, index) => (
-              <tr key={transaction.id}>
-                <td>{index + 1}</td>
-                <td>{transaction.payer.username}</td>
-                <td>{transaction.splited_amount.toLocaleString()}</td>
-                <td>{transaction.date}</td>
+      {queryTransactions.isLoading ? (
+        'Loading...'
+      ) : (
+        <div className="border rounded p-3 bg-light">
+          <Table striped hover>
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th>Lender</th>
+                <th>Amount</th>
+                <th>Date</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+            </thead>
+            <tbody>
+              {queryTransactions.data?.map((transaction, index) => (
+                <tr key={transaction.id}>
+                  <td>{index + 1}</td>
+                  <td>{transaction.payer.username}</td>
+                  <td>{transaction.splited_amount.toLocaleString()}</td>
+                  <td>{transaction.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </Container>
   )
 }

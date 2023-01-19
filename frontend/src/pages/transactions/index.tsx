@@ -24,78 +24,82 @@ const Transactions = () => {
         </Link>
       </div>
 
-      <div className="border rounded p-3 bg-light">
-        <Form className="mb-3">
-          <Row style={{ maxWidth: '50rem' }}>
-            <Col>
-              <FormControl type="date" onChange={(e) => setDate(e.target.value)} size="sm" />
-            </Col>
+      {queryTransactions.isLoading ? (
+        'Loading...'
+      ) : (
+        <div className="border rounded p-3 bg-light">
+          <Form className="mb-3">
+            <Row style={{ maxWidth: '50rem' }}>
+              <Col>
+                <FormControl type="date" onChange={(e) => setDate(e.target.value)} size="sm" />
+              </Col>
 
-            <Col>
-              <FormControl as="select" onChange={(e) => setCategory(e.target.value)} size="sm">
-                <option value="">All Categories</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="transportation">Transportation</option>
-                <option value="shopping">Shopping</option>
-                <option value="bills">Bills</option>
-                <option value="food">Food</option>
-                <option value="other">Other</option>
-              </FormControl>
-            </Col>
-            <Col>
-              <Button onClick={() => queryTransactions.refetch()} size="sm">
-                Filter
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+              <Col>
+                <FormControl as="select" onChange={(e) => setCategory(e.target.value)} size="sm">
+                  <option value="">All Categories</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="transportation">Transportation</option>
+                  <option value="shopping">Shopping</option>
+                  <option value="bills">Bills</option>
+                  <option value="food">Food</option>
+                  <option value="other">Other</option>
+                </FormControl>
+              </Col>
+              <Col>
+                <Button onClick={() => queryTransactions.refetch()} size="sm">
+                  Filter
+                </Button>
+              </Col>
+            </Row>
+          </Form>
 
-        <Table striped hover>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Amount</th>
-              <th>Description</th>
-              <th>Payer</th>
-              <th>Friends</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {queryTransactions.data?.map((transaction) => (
-              <tr key={transaction.id}>
-                <td>{transaction.id}</td>
-                <td>{transaction.amount}</td>
-                <td>{transaction.description}</td>
-                <td>{transaction.payer.username}</td>
-                <td>{transaction.friends.map((friend) => friend.username).join(', ')}</td>
-                <td className="text-capitalize">{transaction.category}</td>
-                <td>{transaction.date}</td>
-                <td className="d-flex gap-2">
-                  <Link to={`/transactions/${transaction.id}/edit`}>Edit</Link>
-                  <Link
-                    to="#"
-                    onClick={async () => {
-                      if (window.confirm('Are you sure you want to delete this transaction?')) {
-                        try {
-                          await api.delete(`/api/transactions/${transaction.id}/`)
-                          queryTransactions.refetch()
-                        } catch (error) {
-                          console.log(error)
-                        }
-                      }
-                    }}
-                  >
-                    Delete
-                  </Link>
-                </td>
+          <Table striped hover>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Payer</th>
+                <th>Friends</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+            </thead>
+            <tbody>
+              {queryTransactions.data?.map((transaction) => (
+                <tr key={transaction.id}>
+                  <td>{transaction.id}</td>
+                  <td>{transaction.amount}</td>
+                  <td>{transaction.description}</td>
+                  <td>{transaction.payer.username}</td>
+                  <td>{transaction.friends.map((friend) => friend.username).join(', ')}</td>
+                  <td className="text-capitalize">{transaction.category}</td>
+                  <td>{transaction.date}</td>
+                  <td className="d-flex gap-2">
+                    <Link to={`/transactions/${transaction.id}/edit`}>Edit</Link>
+                    <Link
+                      to="#"
+                      onClick={async () => {
+                        if (window.confirm('Are you sure you want to delete this transaction?')) {
+                          try {
+                            await api.delete(`/api/transactions/${transaction.id}/`)
+                            queryTransactions.refetch()
+                          } catch (error) {
+                            console.log(error)
+                          }
+                        }
+                      }}
+                    >
+                      Delete
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </Container>
   )
 }

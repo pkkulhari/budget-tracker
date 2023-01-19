@@ -42,60 +42,68 @@ const Friends = () => {
     <Container>
       <h1 className="h4 mb-3">Friends</h1>
 
-      <Form className="mb-3" onSubmit={handleAddFriend}>
-        <Row style={{ maxWidth: '50rem' }}>
-          <Col>
-            <Select
-              options={queryUsers.data?.map((user) => ({ value: user.id, label: user.username }))}
-              onChange={(item) => setFormData({ ...formData, friend: item?.value })}
-              placeholder="Select a friend"
-            />
-          </Col>
-          <Col>
-            <Button type="submit">Add Friend</Button>
-          </Col>
-        </Row>
-      </Form>
-
-      <div className="border rounded p-3 bg-light">
-        <Table striped hover>
-          <thead>
-            <tr>
-              <th>Sr. No.</th>
-              <th>Username</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {queryFriends.data?.map((friend, index) => (
-              <tr key={friend.id}>
-                <td>{index + 1}</td>
-                <td>{friend.username}</td>
-                <td>
-                  <Link
-                    to="#"
-                    onClick={async () => {
-                      if (window.confirm('Are you sure you want to remove this friend?')) {
-                        try {
-                          await api.delete(`/api/users/${user?.id}/friends/`, {
-                            data: { friend: friend.id },
-                          })
-                          queryFriends.refetch()
-                          queryUsers.refetch()
-                        } catch (error) {
-                          console.log(error)
-                        }
-                      }
-                    }}
-                  >
-                    Remove
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+      {queryUsers.isLoading && queryFriends.isLoading ? (
+        'Loading...'
+      ) : (
+        <>
+          <Form className="mb-3" onSubmit={handleAddFriend}>
+            <Row style={{ maxWidth: '50rem' }}>
+              <Col>
+                <Select
+                  options={queryUsers.data?.map((user) => ({
+                    value: user.id,
+                    label: user.username,
+                  }))}
+                  onChange={(item) => setFormData({ ...formData, friend: item?.value })}
+                  placeholder="Select a friend"
+                />
+              </Col>
+              <Col>
+                <Button type="submit">Add Friend</Button>
+              </Col>
+            </Row>
+          </Form>
+          <div className="border rounded p-3 bg-light">
+            <Table striped hover>
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Username</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {queryFriends.data?.map((friend, index) => (
+                  <tr key={friend.id}>
+                    <td>{index + 1}</td>
+                    <td>{friend.username}</td>
+                    <td>
+                      <Link
+                        to="#"
+                        onClick={async () => {
+                          if (window.confirm('Are you sure you want to remove this friend?')) {
+                            try {
+                              await api.delete(`/api/users/${user?.id}/friends/`, {
+                                data: { friend: friend.id },
+                              })
+                              queryFriends.refetch()
+                              queryUsers.refetch()
+                            } catch (error) {
+                              console.log(error)
+                            }
+                          }
+                        }}
+                      >
+                        Remove
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </>
+      )}
     </Container>
   )
 }
