@@ -1,18 +1,20 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
-const API_URL = process.env.API_URL || 'http://127.0.0.1:8000'
-
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: API_URL,
-        changeOrigin: true,
-        secure: false,
+export default defineConfig(({ mode }) => {
+  const isDev = mode === 'development'
+
+  return {
+    plugins: [react()],
+    server: {
+      proxy: {
+        '/api': {
+          target: isDev ? 'http://127.0.0.1:8000' : 'https://budget-tracker-986o.onrender.com',
+          changeOrigin: true,
+          secure: false,
+        },
       },
     },
-  },
+  }
 })
