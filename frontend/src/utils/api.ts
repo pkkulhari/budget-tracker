@@ -1,8 +1,12 @@
 import axios from 'axios'
 
+const API_URL = import.meta.env.DEV
+  ? 'http://127.0.0.1:8000'
+  : 'https://budget-tracker-986o.onrender.com'
+
 const refreshAccessToken = async () => {
   try {
-    const { data } = await axios.post(`/api/token/refresh/`, {
+    const { data } = await axios.post(`${API_URL}/api/token/refresh/`, {
       refresh: localStorage.getItem('refreshToken'),
     })
 
@@ -12,7 +16,9 @@ const refreshAccessToken = async () => {
   }
 }
 
-const api = axios.create()
+const api = axios.create({
+  baseURL: API_URL,
+})
 
 api.interceptors.request.use(
   async (config) => {

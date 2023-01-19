@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { Alert, Container } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { Link, useNavigate } from 'react-router-dom'
+import api from '../utils/api'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const Signup = () => {
     }
 
     try {
-      await axios.post('/api/signup/', { ...formData, confirmPassword: undefined })
+      await api.post('/api/signup/', { ...formData, confirmPassword: undefined })
       navigate('/login')
     } catch (err: any) {
       if (err.response.status === 400) setError('A user with that username already exists')

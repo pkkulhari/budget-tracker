@@ -1,10 +1,10 @@
-import axios from 'axios'
 import { useContext, useState } from 'react'
 import { Alert, Container } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
+import api from '../utils/api'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ const Login = () => {
     setLoading(true)
 
     try {
-      const { data } = await axios.post('/api/token/', formData)
+      const { data } = await api.post('/api/token/', formData)
       login(data)
       navigate('/')
     } catch (err: any) {
