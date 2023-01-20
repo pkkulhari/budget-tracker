@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.DEV
+export const API_URL = import.meta.env.DEV
   ? 'http://127.0.0.1:8000'
   : 'https://budget-tracker-986o.onrender.com'
 
