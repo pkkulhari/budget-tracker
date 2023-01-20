@@ -2,6 +2,12 @@
 
 A simple budget-tracking application built with Django(DRF) and React.js
 
+## Live Demo
+
+https://budget-tracker-i62i.onrender.com (username: praveen, password: pass)
+
+**Note:** This demo is hosted on free server, thus some actions may take logger time.
+
 ## Features
 
 - Add, edit and delete transactions
